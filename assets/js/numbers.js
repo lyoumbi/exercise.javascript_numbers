@@ -11,38 +11,67 @@ for(let i = 0; i < numbers.length; i++) {
 }
 
 let jsonOp = jsonOfOperators(operators);
-let result = 0;
+let result = null;
 
-if(jsonOp.multiplication == operators.length) {
-    result = numbers[0];
-    for(let i = 0; i < operators.length; i++) {
-        result = calculation("*", result, numbers[i + 1]);
+if(jsonOp.multiplication != 0) {
+    result = numbers[operators.indexOf("*")];
+    for(let i = 0; i < jsonOp.multiplication; i++) {
+        result = calculation("*", result, numbers[operators.indexOf("*") + 1]);
+        numbers[operators.indexOf("*")] = result;
+        operators[operators.indexOf("*")] = "";
+        console.log("++++++++++++++++");
+        console.log(i + " * iteration operators = " + operators);
+        console.log(i + " * iteration numbers = " + numbers);
+        console.log("++++++++++++++++");
     }
-    return result;
+    
+} 
+
+if(jsonOp.division != 0) {
+    if(result == null) {
+        result = numbers[operators.indexOf("/")];
+    } 
+    for(let i = 0; i < jsonOp.division; i++) {
+        result = calculation("/", result, numbers[operators.indexOf("/") + 1]);
+        numbers[operators.indexOf("/")] = result;
+        operators[operators.indexOf("/")] = "";
+        console.log("++++++++++++++++");
+        console.log(i + " / iteration operators = " + operators);
+        console.log(i + " / iteration numbers = " + numbers);
+        console.log("++++++++++++++++");
+    }
+
 }
 
-if(jsonOp.division == operators.length) {
-    result = numbers[0];
-    for(let i = 0; i < operators.length; i++) {
-        result = calculation("/", result, numbers[i + 1]);
+if(jsonOp.subtraction != 0) {
+    if(result == null) {
+        result = numbers[operators.indexOf("-")];
+    } 
+    for(let i = 0; i < jsonOp.subtraction; i++) {
+        result = calculation("-", result, numbers[operators.indexOf("-") + 1]);
+        numbers[operators.indexOf("-")] = result;
+        operators[operators.indexOf("-")] = "";
+        console.log("++++++++++++++++");
+        console.log(i + " - iteration operators = " + operators);
+        console.log(i + " - iteration numbers = " + numbers);
+        console.log("++++++++++++++++");
     }
-    return result;
 }
 
-if(jsonOp.addition == operators.length) {
-    result = numbers[0];
-    for(let i = 0; i < operators.length; i++) {
-        result = calculation("+", result, numbers[i + 1]);
+if(jsonOp.addition != 0) {
+    if(result == null) {
+        result = numbers[operators.indexOf("+")];
+    } 
+    for(let i = 0; i < jsonOp.addition; i++) {
+        console.log("result inside + =" + result);
+        result = calculation("+", result, numbers[operators.indexOf("+")]);
+        numbers[operators.indexOf("+")] = result;
+        operators[operators.indexOf("+")] = "";
+        console.log("++++++++++++++++");
+        console.log(i + " + iteration operators = " + operators);
+        console.log(i + " + iteration numbers = " + numbers);
+        console.log("++++++++++++++++");
     }
-    return result;
-}
-
-if(jsonOp.subtraction == operators.length) {
-    result = numbers[0];
-    for(let i = 0; i < operators.length; i++) {
-        result = calculation("-", result, numbers[i + 1]);
-    }
-    return result;
 }
 
 return result;
